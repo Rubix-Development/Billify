@@ -12,7 +12,7 @@ import nl.rubixstudios.billify.data.Language;
 import nl.rubixstudios.billify.invoice.InvoiceController;
 import nl.rubixstudios.billify.util.ColorUtil;
 import nl.rubixstudios.billify.util.VaultDownloader;
-import nl.rubixstudios.billify.util.metrics.Metrics;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.PluginCommand;
@@ -76,7 +76,8 @@ public final class Billify extends JavaPlugin {
         commandManager = new PaperCommandManager(this);
         commandManager.registerCommand(new InvoiceCommand());
 
-        int pluginId = 19961; // <-- Replace with the id of your plugin!
+        // bStats metrics (https://bstats.org)
+        int pluginId = 33589;
         metrics = new Metrics(this, pluginId);
 
         fullyEnabled = true;

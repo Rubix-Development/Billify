@@ -39,6 +39,10 @@
                     <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                     <relocations>
                         <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>nl.rubixstudios.billify.util.bstats</shadedPattern>
+                        </relocation>
+                        <relocation>
                             <pattern>com.cryptomorin.xseries</pattern>
                             <shadedPattern>nl.rubixstudios.billify.util.shade.xseries</shadedPattern>
                         </relocation>
@@ -144,6 +148,13 @@
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>3.2.1</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
