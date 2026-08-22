@@ -1,0 +1,49 @@
+BSD 4-Clause License
+
+Copyright (c) 2023, Rubix Studios
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. All advertising materials mentioning features or use of this software must
+   display the following acknowledgement:
+     This product includes software developed by Rubix Studios.
+
+4. Neither the name of the copyright holder nor the names of its
+   contributors may be used to endorse or promote products derived from
+   this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY COPYRIGHT HOLDER "AS IS" AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+EVENT SHALL COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Contributor Agreement:
+
+By contributing to Billify, you agree to the following terms:
+
+1. You represent and warrant that you have the right to contribute the code you are submitting and that such contribution does not violate or infringe upon any third-party rights, including without limitation any intellectual property rights.
+
+2. You grant to Billify a perpetual, worldwide, non-exclusive, royalty-free, irrevocable license under your copyrights, patents, trademarks, trade secrets, and other intellectual property rights, to use, copy, modify, distribute, and make derivative works of your contribution.
+
+3. You agree that Billify may sublicense the contribution and that the sublicensed rights may be assigned and/or transferred by Billify.
+
+4. You acknowledge that your contribution may be included in non-commercial products and services offered by Billify, but you expressly prohibit the use of your contribution for any commercial purposes.
+
+5. You agree that Billify alone is the vendor of this source code unless otherwise stated by Billify.
+
+Note that by incorporating Billify's Terms of Service into this agreement, you are agreeing to comply with all the obligations and restrictions set forth in those terms, including without limitation any restrictions on the use or distribution of the code. Failure to comply with these terms may result in the revocation of your license to use the code.
