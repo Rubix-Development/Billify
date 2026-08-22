@@ -38,4 +38,4 @@ Set permissions by rank to control invoice capabilities on your server.
 
 ## Support
 
-If you need help or have questions, join our support server: [AizsArgs Services Discord](https://discord.aizsargs.xyz)
+If you need help or have questions, join our support server: [Rubix Development Discord](https://discord.rubixdevelopment.nl)
