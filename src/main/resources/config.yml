@@ -6,6 +6,12 @@
 # You can also create your own file in the plugin folder and point to it here.
 LANGUAGE_FILE: "language_EN.yml"
 
+VAULT:
+  # When Vault is not installed, automatically download the correct Vault
+  # release for your server version (1.13+ -> Vault 1.7.3, 1.8-1.12 -> Vault 1.7.2)
+  # from the official GitHub releases and load it without a restart.
+  AUTO_DOWNLOAD: true
+
 OPEN_INVOICE_MENU:
   COMMAND:
     ENABLED: true # Enable or disable the command for opening the invoice menu.

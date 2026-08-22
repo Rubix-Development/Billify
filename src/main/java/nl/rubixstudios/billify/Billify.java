@@ -11,6 +11,7 @@ import nl.rubixstudios.billify.data.ConfigFile;
 import nl.rubixstudios.billify.data.Language;
 import nl.rubixstudios.billify.invoice.InvoiceController;
 import nl.rubixstudios.billify.util.ColorUtil;
+import nl.rubixstudios.billify.util.VaultDownloader;
 import nl.rubixstudios.billify.util.metrics.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
@@ -27,6 +28,8 @@ public final class Billify extends JavaPlugin {
     @Setter private boolean fullyEnabled;
 
     private Metrics metrics;
+
+    private int serverMajorVersion;
 
     @Setter private ConfigFile configFile;
     @Setter private ConfigFile langFile;
@@ -57,8 +60,12 @@ public final class Billify extends JavaPlugin {
             return;
         }
 
-        // Check Vault availability
-        checkVault();
+        // Check Vault availability (and auto-download it if needed)
+        if (!checkVault() && Config.getBoolean("ECONOMY.USE_VAULT")) {
+            log("&cVault is required (ECONOMY.USE_VAULT is true) but could not be installed. Disabling Billify.");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
 
         registerGson();
         setupEconomy();
@@ -134,10 +141,11 @@ public final class Billify extends JavaPlugin {
         int majorVersion;
         try {
             String[] versionParts = serverVersion.split("\\.");
-            majorVersion = Integer.parseInt(versionParts[1]); // The major version number is the second part
+            majorVersion = Integer.parseInt(versionParts[1].replaceAll("[^0-9].*$", "")); // The major version number is the second part
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             return false; // Unable to determine version, handle accordingly
         }
+        this.serverMajorVersion = majorVersion;
 
         // Check if the major version is between 8 and 20 (inclusive)
         if (majorVersion >= 8 && majorVersion <= 20) {
@@ -152,8 +160,14 @@ public final class Billify extends JavaPlugin {
     private boolean checkVault() {
         log("&eChecking Vault availability:");
         if (!Bukkit.getPluginManager().isPluginEnabled("Vault")) {
-            log("   &c&lVault integration is not available because it's not installed!");
-            return false;
+            if (Config.getBoolean("VAULT.AUTO_DOWNLOAD")) {
+                if (!VaultDownloader.downloadAndLoad(serverMajorVersion)) {
+                    return false;
+                }
+            } else {
+                log("   &c&lVault integration is not available because it's not installed!");
+                return false;
+            }
         }
         log("   &aVault is installed and available.");
         log("");

@@ -4,7 +4,7 @@ main: nl.rubixstudios.billify.Billify
 author: PingLagger, Artiquillos
 website: https://discord.aizsargs.xyz
 api-version: 1.13
-depend:
+softdepend:
   - Vault
 commands:
   invoice:
