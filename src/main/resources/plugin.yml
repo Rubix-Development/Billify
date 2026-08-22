@@ -1,0 +1,33 @@
+name: Billify
+version: '${project.version}'
+main: nl.rubixstudios.billify.Billify
+author: PingLagger, Artiquillos
+website: https://discord.aizsargs.xyz
+api-version: 1.13
+depend:
+  - Vault
+commands:
+  invoice:
+    description: Manage invoices for players
+permissions:
+  billify.open:
+    description: Open your own invoice menu
+    default: true
+  billify.openmenu:
+    description: Open the invoice menu via right-click item/block
+    default: true
+  billify.command.help:
+    description: View the invoice help command
+    default: true
+  billify.command.create:
+    description: Create invoices
+    default: op
+  billify.command.forcecreate:
+    description: Force create invoices between two players
+    default: op
+  billify.command.view:
+    description: View another player's invoices
+    default: op
+  billify.command.cancel:
+    description: Cancel invoices
+    default: op

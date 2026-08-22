@@ -1,0 +1,86 @@
+#=========================================================#
+#                        Billify                          #
+#=========================================================#
+
+# The language file to use. Bundled: language_EN.yml, language_NL.yml
+# You can also create your own file in the plugin folder and point to it here.
+LANGUAGE_FILE: "language_EN.yml"
+
+OPEN_INVOICE_MENU:
+  COMMAND:
+    ENABLED: true # Enable or disable the command for opening the invoice menu.
+    ALIASES: # List of aliases for the command.
+      - "invoice"
+      - "inv"
+      - "invmenu"
+    PERMISSION:
+      NEED_PERMISSION: false # Specify if players need a permission to access the menu.
+      PERMISSION: "billify.openmenu" # The permission required to open the menu.
+
+  MENU:
+    SHOW_BALANCE: true # Show the player's balance (via Vault/Essentials) in the invoice menu.
+
+  RIGHT_CLICK_ITEM:
+    ENABLED: true # Enable or disable opening the menu by right-clicking an item.
+    ITEM: # Item that players need to right-click to open the menu.
+      MATERIAL: "PAPER" # Material of the item.
+    PERMISSION:
+      NEED_PERMISSION: false # Specify if players need a permission to right-click the item.
+      PERMISSION: "billify.openmenu" # Permission required to right-click the item.
+
+  RIGHT_CLICK_BLOCK:
+    ENABLED: true # Enable or disable opening the menu by right-clicking a block.
+    BLOCK: # Block that players need to right-click to open the menu.
+      MATERIAL: "RED_SANDSTONE_STAIRS" # Material of the block.
+    PERMISSION:
+      NEED_PERMISSION: false # Specify if players need a permission to right-click the block.
+      PERMISSION: "billify.openmenu" # Permission required to right-click the block.
+
+INVOICE_SETTINGS:
+  STANDARD_DAYS_TO_PAY: 7 # Number of days players have to pay their invoices.
+
+# Debt collection agency ("incassobureau") for overdue invoices.
+DEBT_COLLECTION:
+  ENABLED: true # Master switch for the debt collection system.
+  AGENCY_NAME: "&c&lBillify Incasso" # Name of the agency, used in messages via %agency%.
+
+  # One-time fee added to the invoice amount once it becomes overdue.
+  # Set to 0 to disable.
+  COLLECTION_FEE_PERCENT: 10.0
+
+  REMINDER:
+    ENABLED: true # Send reminder messages to players with overdue invoices.
+    INTERVAL_MINUTES: 30 # How often (in minutes) an online player is reminded per invoice.
+
+  AUTO_COLLECT:
+    ENABLED: true # Automatically withdraw overdue invoices from the player's balance.
+    # true  -> the amount is always withdrawn, even if the player goes into the negative
+    #          (requires your economy plugin to allow negative balances, e.g. Essentials min-money).
+    # false -> the invoice is only collected once the player has enough balance;
+    #          until then they keep receiving reminders.
+    ALLOW_NEGATIVE_BALANCE: false
+
+RANK_PERMISSIONS:
+  ONLY_RANKS_MAY_VIEW_INVOICES: false # Allow only specific ranks to view invoices.
+
+  # Define the ranks that can send invoices to players.
+  RANKS:
+    DEFAULT: # Example rank
+      PERMISSION: "billify.default" # Permission required to send invoices.
+      LIMIT_AMOUNT: 1000.00 # Maximum amount a player can send in an invoice.
+      CAN_CREATE_INVOICE: true # Can the player create invoices?
+      CAN_CANCEL_INVOICE: true # Can the player cancel invoices?
+      CAN_CHECK_INVOICE: false # Can the player check other players invoices?
+    POLICE: # Example rank
+      PERMISSION: "billify.police" # Permission required to send invoices.
+      LIMIT_AMOUNT: 1000.00 # Maximum amount a player can send in an invoice.
+      CAN_CREATE_INVOICE: true # Can the player create invoices?
+      CAN_CANCEL_INVOICE: true # Can the player cancel invoices?
+      CAN_CHECK_INVOICE: true # Can the player check invoices?
+
+ECONOMY:
+  # By default, the plugin uses Vault for the economy system (works with Essentials, CMI, etc.).
+  # Configure the following commands only if USE_VAULT is set to false.
+  USE_VAULT: true # Set to true to use Vault for economy.
+  ADD_BALANCE_COMMAND: "eco give %player% %amount%" # Command to add balance to a player.
+  REMOVE_BALANCE_COMMAND: "eco take %player% %amount%" # Command to remove balance from a player.
