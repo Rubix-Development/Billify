@@ -1,0 +1,111 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    },
+    "entries": [
+      {
+        "threshold": 9100,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/invisible"
+        }
+      },
+      {
+        "threshold": 9101,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/invoice_open"
+        }
+      },
+      {
+        "threshold": 9102,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/invoice_overdue"
+        }
+      },
+      {
+        "threshold": 9103,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/invoice_paid"
+        }
+      },
+      {
+        "threshold": 9104,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/invoice_collected"
+        }
+      },
+      {
+        "threshold": 9105,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/invoice_cancelled"
+        }
+      },
+      {
+        "threshold": 9110,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/tab_open"
+        }
+      },
+      {
+        "threshold": 9111,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/tab_paid"
+        }
+      },
+      {
+        "threshold": 9112,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/coin"
+        }
+      },
+      {
+        "threshold": 9113,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/close"
+        }
+      },
+      {
+        "threshold": 9114,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/previous"
+        }
+      },
+      {
+        "threshold": 9115,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/next"
+        }
+      },
+      {
+        "threshold": 9116,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/pay"
+        }
+      },
+      {
+        "threshold": 9117,
+        "model": {
+          "type": "minecraft:model",
+          "model": "billify:item/back"
+        }
+      }
+    ]
+  }
+}

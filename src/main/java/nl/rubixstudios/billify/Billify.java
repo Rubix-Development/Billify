@@ -10,6 +10,7 @@ import nl.rubixstudios.billify.data.Config;
 import nl.rubixstudios.billify.data.ConfigFile;
 import nl.rubixstudios.billify.data.Language;
 import nl.rubixstudios.billify.invoice.InvoiceController;
+import nl.rubixstudios.billify.resourcepack.ResourcePackManager;
 import nl.rubixstudios.billify.util.ColorUtil;
 import nl.rubixstudios.billify.util.VaultDownloader;
 import org.bstats.bukkit.Metrics;
@@ -70,6 +71,7 @@ public final class Billify extends JavaPlugin {
         registerGson();
         setupEconomy();
 
+        new ResourcePackManager();
         invoiceController = new InvoiceController();
 
         // Initialize ACF and register the command
@@ -139,17 +141,18 @@ public final class Billify extends JavaPlugin {
         String serverVersion = Bukkit.getServer().getVersion();
 
         // Extract the major version number
+        // Year-based versions (e.g. "26.1") are newer than every 1.x release.
         int majorVersion;
         try {
-            String[] versionParts = serverVersion.split("\\.");
-            majorVersion = Integer.parseInt(versionParts[1].replaceAll("[^0-9].*$", "")); // The major version number is the second part
+            String[] versionParts = Bukkit.getBukkitVersion().split("-")[0].split("\\.");
+            int first = Integer.parseInt(versionParts[0]);
+            majorVersion = first > 1 ? first : Integer.parseInt(versionParts[1]);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
             return false; // Unable to determine version, handle accordingly
         }
         this.serverMajorVersion = majorVersion;
 
-        // Check if the major version is between 8 and 20 (inclusive)
-        if (majorVersion >= 8 && majorVersion <= 20) {
+        if (majorVersion >= 8) {
             log("&aServer version %version% is compatible!".replace("%version%", String.valueOf(majorVersion)));
             return true;
         } else {

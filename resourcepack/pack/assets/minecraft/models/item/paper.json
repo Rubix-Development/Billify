@@ -1,0 +1,92 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/paper"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 9100
+      },
+      "model": "billify:item/invisible"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9101
+      },
+      "model": "billify:item/invoice_open"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9102
+      },
+      "model": "billify:item/invoice_overdue"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9103
+      },
+      "model": "billify:item/invoice_paid"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9104
+      },
+      "model": "billify:item/invoice_collected"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9105
+      },
+      "model": "billify:item/invoice_cancelled"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9110
+      },
+      "model": "billify:item/tab_open"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9111
+      },
+      "model": "billify:item/tab_paid"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9112
+      },
+      "model": "billify:item/coin"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9113
+      },
+      "model": "billify:item/close"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9114
+      },
+      "model": "billify:item/previous"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9115
+      },
+      "model": "billify:item/next"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9116
+      },
+      "model": "billify:item/pay"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9117
+      },
+      "model": "billify:item/back"
+    }
+  ]
+}

@@ -2,7 +2,7 @@ name: Billify
 version: '${project.version}'
 main: nl.rubixstudios.billify.Billify
 author: PingLagger, Artiquillos
-website: https://discord.rubixdevelopment.nl
+website: https://discord.gg/vwysWvaner
 api-version: 1.13
 softdepend:
   - Vault

@@ -169,7 +169,6 @@ public class InvoiceManager {
 
     private void completePayment(Invoice invoice, OfflinePlayer payer, InvoiceStatus status) {
         invoice.setInvoiceStatus(status);
-        invoice.setDaysToPay(0);
         invoice.setPaymentDateTime(System.currentTimeMillis());
         invoice.setPaidBy(payer.getUniqueId());
 
@@ -191,7 +190,6 @@ public class InvoiceManager {
         }
 
         invoice.setInvoiceStatus(InvoiceStatus.CANCELLED);
-        invoice.setDaysToPay(0);
         invoice.setCanceledOnDateTime(System.currentTimeMillis());
         invoice.setCancelReason(reason);
         invoice.setCanceledBy(player.getUniqueId());

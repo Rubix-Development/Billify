@@ -7,6 +7,9 @@ import nl.rubixstudios.billify.Billify;
 import nl.rubixstudios.billify.data.Config;
 import nl.rubixstudios.billify.data.Language;
 import nl.rubixstudios.billify.invoice.menu.InvoiceMenuButtons;
+import nl.rubixstudios.billify.invoice.menu.ReceiptMenu;
+import nl.rubixstudios.billify.resourcepack.ResourcePackManager;
+import nl.rubixstudios.billify.resourcepack.TitleBuilder;
 import nl.rubixstudios.billify.invoice.object.Invoice;
 import nl.rubixstudios.billify.invoice.object.InvoiceStatus;
 import nl.rubixstudios.billify.util.ColorUtil;
@@ -48,11 +51,13 @@ public class InvoiceController implements Listener {
         private final UUID target;
         private final boolean openTab;
         private final int page;
+        private final int invoiceId; // -1 for the invoice list, otherwise the open receipt
 
-        private MenuView(UUID target, boolean openTab, int page) {
+        private MenuView(UUID target, boolean openTab, int page, int invoiceId) {
             this.target = target;
             this.openTab = openTab;
             this.page = page;
+            this.invoiceId = invoiceId;
         }
     }
 
@@ -77,54 +82,86 @@ public class InvoiceController implements Listener {
         final int maxPage = Math.max(0, (invoices.size() - 1) / INVOICES_PER_PAGE);
         page = Math.max(0, Math.min(page, maxPage));
 
-        final String inventoryOf = "[" + targetPlayer.getName() + "]";
+        final boolean pack = ResourcePackManager.hasPack(player);
         final String section = openInvoice ? Language.getMessage("INVOICE.MENU.SECTIONS.OPEN") : Language.getMessage("INVOICE.MENU.SECTIONS.PAID");
-        final Inventory invoiceMenu = Bukkit.createInventory(null, 54, ColorUtil.translate("&8&l» " + Language.getMessage("INVOICE.MENU.SECTIONS.INVOICE") + " &8| " + section + " " + inventoryOf));
+        final String title;
+        if (pack) {
+            final String header = (player.getUniqueId().equals(targetPlayer.getUniqueId())
+                    ? Language.getMessage("INVOICE.MENU.PACK_HEADER")
+                    : Language.getMessage("INVOICE.MENU.PACK_HEADER_OTHER"))
+                    .replace("%section%", ColorUtil.strip(section))
+                    .replace("%player%", String.valueOf(targetPlayer.getName()))
+                    .replace("%page%", String.valueOf(page + 1))
+                    .replace("%pages%", String.valueOf(maxPage + 1));
+            title = new TitleBuilder()
+                    .glyph("MAIN", 0)
+                    .text(8, 0, Language.getMessage("INVOICE.RECEIPT.COLORS.HEADER"), TitleBuilder.fit(header, 160))
+                    .build();
+        } else {
+            final String inventoryOf = "[" + targetPlayer.getName() + "]";
+            title = ColorUtil.translate("&8&l» " + Language.getMessage("INVOICE.MENU.SECTIONS.INVOICE") + " &8| " + section + " " + inventoryOf);
+        }
+        final Inventory invoiceMenu = Bukkit.createInventory(null, 54, title);
 
         for (int i = 0; i < 54; i++) {
             if (i < 9 || i > 44) {
-                handleNonClickableItems(invoiceMenu, i, targetPlayer, page, maxPage);
+                handleNonClickableItems(invoiceMenu, i, targetPlayer, page, maxPage, pack);
                 continue;
             }
 
             int invoiceIndex = (page * INVOICES_PER_PAGE) + (i - 9);
             if (invoiceIndex < invoices.size()) {
-                invoiceMenu.setItem(i, InvoiceMenuButtons.invoice(invoices.get(invoiceIndex)));
+                invoiceMenu.setItem(i, InvoiceMenuButtons.invoice(invoices.get(invoiceIndex), pack));
             }
         }
 
         // openInventory closes any current menu first (which fires InventoryCloseEvent),
         // so register the view only after the new inventory is open.
         player.openInventory(invoiceMenu);
-        openMenus.put(player.getUniqueId(), new MenuView(targetPlayer.getUniqueId(), openInvoice, page));
+        openMenus.put(player.getUniqueId(), new MenuView(targetPlayer.getUniqueId(), openInvoice, page, -1));
     }
 
-    private void handleNonClickableItems(Inventory invoiceMenu, int index, OfflinePlayer targetPlayer, int page, int maxPage) {
+    public void openReceipt(Player player, OfflinePlayer targetPlayer, int invoiceId, boolean openTab, int page) {
+        final InvoiceUser invoiceUser = invoiceManager.getOrCreateInvoiceUser(targetPlayer.getUniqueId());
+        final Invoice invoice = invoiceUser.getInvoices().stream()
+                .filter(inv -> inv.getInvoiceId() == invoiceId)
+                .findFirst()
+                .orElse(null);
+        if (invoice == null) {
+            openInvoiceMenu(player, targetPlayer, openTab, page);
+            return;
+        }
+
+        player.openInventory(ReceiptMenu.create(invoice, targetPlayer, ResourcePackManager.hasPack(player)));
+        openMenus.put(player.getUniqueId(), new MenuView(targetPlayer.getUniqueId(), openTab, page, invoiceId));
+    }
+
+    private void handleNonClickableItems(Inventory invoiceMenu, int index, OfflinePlayer targetPlayer, int page, int maxPage, boolean pack) {
         switch (index) {
             case 3:
-                invoiceMenu.setItem(index, InvoiceMenuButtons.openInvoices());
+                invoiceMenu.setItem(index, InvoiceMenuButtons.openInvoices(pack));
                 break;
             case 4:
                 if (Config.getBoolean("OPEN_INVOICE_MENU.MENU.SHOW_BALANCE") && EconomyUtil.hasBalanceSupport()) {
-                    invoiceMenu.setItem(index, InvoiceMenuButtons.balance(targetPlayer));
+                    invoiceMenu.setItem(index, InvoiceMenuButtons.balance(targetPlayer, pack));
                 } else {
-                    invoiceMenu.setItem(index, InvoiceMenuButtons.glass());
+                    invoiceMenu.setItem(index, InvoiceMenuButtons.glass(pack));
                 }
                 break;
             case 5:
-                invoiceMenu.setItem(index, InvoiceMenuButtons.paidInvoices());
+                invoiceMenu.setItem(index, InvoiceMenuButtons.paidInvoices(pack));
                 break;
             case 48:
-                invoiceMenu.setItem(index, page > 0 ? InvoiceMenuButtons.previousPage() : InvoiceMenuButtons.glass());
+                invoiceMenu.setItem(index, page > 0 ? InvoiceMenuButtons.previousPage(pack) : InvoiceMenuButtons.glass(pack));
                 break;
             case 49:
-                invoiceMenu.setItem(index, InvoiceMenuButtons.close());
+                invoiceMenu.setItem(index, InvoiceMenuButtons.close(pack));
                 break;
             case 50:
-                invoiceMenu.setItem(index, page < maxPage ? InvoiceMenuButtons.nextPage() : InvoiceMenuButtons.glass());
+                invoiceMenu.setItem(index, page < maxPage ? InvoiceMenuButtons.nextPage(pack) : InvoiceMenuButtons.glass(pack));
                 break;
             default:
-                invoiceMenu.setItem(index, InvoiceMenuButtons.glass());
+                invoiceMenu.setItem(index, InvoiceMenuButtons.glass(pack));
                 break;
         }
     }
@@ -138,11 +175,10 @@ public class InvoiceController implements Listener {
                         || invoice.getInvoiceStatus() == InvoiceStatus.CANCELLED).collect(Collectors.toList());
     }
 
-    private void handleInvoicePayment(Player player, OfflinePlayer targetPlayer, ItemStack itemStack) {
+    private void handleInvoicePayment(Player player, OfflinePlayer targetPlayer, int invoiceId, MenuView view) {
         if (targetPlayer != null && !player.getUniqueId().equals(targetPlayer.getUniqueId())) {
             player.sendMessage(Language.getMessage("INVOICE.CHECK.CANNOT_PAY_OTHERS_INVOICE"));
         } else {
-            int invoiceId = NBTEditor.getInt(itemStack, "invoiceId");
             String codeStatus = invoiceManager.payInvoice(player.getUniqueId(), invoiceId, false);
 
             switch (codeStatus) {
@@ -158,7 +194,7 @@ public class InvoiceController implements Listener {
                 case "INVOICE_PAID":
                     player.sendMessage(Language.getMessage("INVOICE.CHECK.INVOICE_PAID")
                             .replace("%invoice_id%", String.valueOf(invoiceId)));
-                    openInvoiceMenu(player, targetPlayer != null ? targetPlayer : player, true);
+                    openReceipt(player, targetPlayer != null ? targetPlayer : player, invoiceId, view.openTab, view.page);
                     break;
                 case "INVOICE_AUTO_PAID":
                     player.sendMessage(Language.getMessage("INVOICE.CHECK.INVOICE_AUTO_PAID")
@@ -209,6 +245,15 @@ public class InvoiceController implements Listener {
 
         final OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(view.target);
 
+        if (view.invoiceId >= 0) {
+            if (NBTEditor.contains(itemStack, "payInvoiceId")) {
+                handleInvoicePayment(player, targetPlayer, NBTEditor.getInt(itemStack, "payInvoiceId"), view);
+            } else if (NBTEditor.contains(itemStack, "isBack")) {
+                openInvoiceMenu(player, targetPlayer, view.openTab, view.page);
+            }
+            return;
+        }
+
         if (NBTEditor.contains(itemStack, "status")) {
             String status = NBTEditor.getString(itemStack, "status");
             if (status.equalsIgnoreCase(InvoiceStatus.OPEN.toString())) {
@@ -223,7 +268,7 @@ public class InvoiceController implements Listener {
         } else if (NBTEditor.contains(itemStack, "isPreviousPage")) {
             openInvoiceMenu(player, targetPlayer, view.openTab, view.page - 1);
         } else if (NBTEditor.contains(itemStack, "invoiceId")) {
-            handleInvoicePayment(player, targetPlayer, itemStack);
+            openReceipt(player, targetPlayer, NBTEditor.getInt(itemStack, "invoiceId"), view.openTab, view.page);
         }
     }
 

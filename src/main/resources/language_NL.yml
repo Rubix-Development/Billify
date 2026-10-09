@@ -7,6 +7,10 @@ INVOICE:
       INVOICE: "&aFactuur"
       OPEN: "&aOpen"
       PAID: "&aBetaald"
+    # Kop van het factuurmenu als de speler het Billify resource pack heeft.
+    # Placeholders: %section%, %player%, %page%, %pages%
+    PACK_HEADER: "Facturen | %section%"
+    PACK_HEADER_OTHER: "%player% | %section%"
   BUTTONS:
     INVOICE:
       TITLE: "&aFactuur #%invoice_id%"
@@ -36,11 +40,65 @@ INVOICE:
         - "&aSaldo van &7%player%&a:"
         - "&6%balance%"
         - ""
+    PAY:
+      TITLE: "&a&lBetaal factuur #%invoice_id%"
+      LORE:
+        - ""
+        - "&7Bedrag: &f%amount%"
+        - "&7Omschrijving: &f%reason%"
+        - ""
+        - "&aKlik om te betalen"
+    BACK: "&7Terug naar je facturen"
     PREVIOUS_PAGE: "&aVorige Pagina"
     NEXT_PAGE: "&aVolgende Pagina"
     CLOSE: "&cSluit Menu"
     OPEN_INVOICES: "&aOpenstaande Facturen"
     PAID_INVOICES: "&aBetaalde Facturen"
+  # Het bonnetje dat je ziet na het klikken op een factuur.
+  RECEIPT:
+    TITLE: "&8&l» &aFactuur #%invoice_id%" # Menutitel zonder resource pack.
+    # Alles hieronder staat op het papieren bonnetje van het resource pack.
+    # Houd teksten kort: te lange teksten worden afgekapt met "..".
+    HEADER: "Factuur #%invoice_id%"
+    HEADING: "FACTUUR"
+    NUMBER: "#%invoice_number%"
+    DAYS_LEFT: "nog %days% dg"
+    DUE_TODAY: "vandaag"
+    DAYS_LATE: "%days% dg te laat"
+    FROM: "Van"
+    TO: "Aan"
+    DATE: "Datum"
+    DUE: "Voor"
+    FEE: "+%percent%% incassokosten"
+    TOTAL: "TOTAAL"
+    DATE_FORMAT: "dd-MM-yyyy"
+    SHORT_DATE_FORMAT: "dd-MM-yy"
+    TIME_FORMAT: "HH:mm"
+    PANEL:
+      PAY: "Betalen"
+      BACK: "Terug"
+      BALANCE: "Saldo"
+      PAID_ON: "Betaald op"
+      PAID_BY: "Betaald door"
+      COLLECTED: "Incasso"
+      COLLECTED_SUB: "automatisch"
+      ON: "op"
+      CANCELLED: "Geannuleerd"
+      BY: "door"
+    COLORS:
+      HEADER: "&f"
+      TEXT: "&#3a2f22"
+      LABEL: "&#7a6e5c"
+      DAYS_LEFT: "&#e68c28"
+      DAYS_LATE: "&#c8322d"
+      FEE: "&#c8322d"
+      PAY: "&f"
+      BACK: "&f"
+      BALANCE: "&e"
+      PANEL_TEXT: "&f"
+      PANEL_ACCENT: "&a"
+      PANEL_WARNING: "&c"
+      PANEL_MUTED: "&7"
   DEBT_COLLECTION:
     REMINDER:
       - ""

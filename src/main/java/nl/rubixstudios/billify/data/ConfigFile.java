@@ -9,6 +9,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -34,6 +38,17 @@ public class ConfigFile extends YamlConfiguration {
             logError(name, e);
             throw new RuntimeException("Failed to load configuration file: " + name, e);
         }
+
+        // Keys added in newer versions fall back to the bundled file, so old configs keep working.
+        // Custom language files fall back to the English one.
+        InputStream defaults = mainInstance.getResource(name);
+        if (defaults == null && name.startsWith("language")) defaults = mainInstance.getResource("language_EN.yml");
+        if (defaults != null) {
+            try (Reader reader = new InputStreamReader(defaults, StandardCharsets.UTF_8)) {
+                this.setDefaults(YamlConfiguration.loadConfiguration(reader));
+            } catch (IOException ignored) {
+            }
+        }
     }
 
     private void logError(String name, Exception e) {
@@ -56,22 +71,23 @@ public class ConfigFile extends YamlConfiguration {
 
     @Override
     public int getInt(String path) {
-        return super.getInt(path, 0);
+        return super.getInt(path);
     }
 
     @Override
     public double getDouble(String path) {
-        return super.getDouble(path, 0.0);
+        return super.getDouble(path);
     }
 
     @Override
     public boolean getBoolean(String path) {
-        return super.getBoolean(path, false);
+        return super.getBoolean(path);
     }
 
     @Override
     public String getString(String path) {
-        return ColorUtil.translate(super.getString(path, ""));
+        final String value = super.getString(path);
+        return ColorUtil.translate(value != null ? value : "");
     }
 
     @Override

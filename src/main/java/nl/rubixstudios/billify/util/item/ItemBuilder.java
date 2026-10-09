@@ -79,6 +79,20 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Set the custom model data used by the Billify resource pack. Ignored on servers
+     * older than 1.14, which have no custom model data.
+     */
+    public ItemBuilder setCustomModelData(int data) {
+        try {
+            ItemMeta im = is.getItemMeta();
+            im.setCustomModelData(data);
+            is.setItemMeta(im);
+        } catch (NoSuchMethodError ignored) {
+        }
+        return this;
+    }
+
     public ItemBuilder setType(Material material) {
         is.setType(material);
         return this;

@@ -1,0 +1,100 @@
+[CENTER][SIZE=7][B][COLOR=#e67e22]Billify[/COLOR][/B][/SIZE]
+[SIZE=4][B]The invoice system your roleplay server has been missing.[/B][/SIZE]
+
+[IMG]https://raw.githubusercontent.com/Rubix-Development/Billify/main/docs/images/receipt-open.png[/IMG]
+
+[SIZE=5][B][URL='https://discord.gg/vwysWvaner']>>> JOIN OUR DISCORD <<<[/URL][/B][/SIZE][/CENTER]
+
+[SIZE=5][B]What is Billify?[/B][/SIZE]
+Inspired by the invoice systems every FiveM roleplay server uses, Billify brings proper billing to Minecraft. Police fining a speeder, a mechanic charging for repairs, a landlord collecting rent - anyone with an invoice rank can send a bill, and the player pays it from a clean GUI.
+
+No more "pay me 500 please" in chat that nobody follows up on. Bills are tracked, visible, and collected automatically by the debt collection agency when they expire.
+
+[SIZE=5][B]NEW: Receipt resource pack[/B][/SIZE]
+Billify ships with an optional resource pack that re-skins every menu: invoices become torn paper receipts with a coloured status strip, your balance gets its own coin panel and paid bills are stamped. Players without the pack simply get the classic item menus, so nothing breaks.
+
+[CENTER][IMG]https://raw.githubusercontent.com/Rubix-Development/Billify/main/docs/images/menu-invoices.png[/IMG]
+[I]Your invoices - open and paid tabs, balance in the middle[/I]
+
+[IMG]https://raw.githubusercontent.com/Rubix-Development/Billify/main/docs/images/receipt-open.png[/IMG]
+[I]Click an invoice to open the receipt - pay or go back[/I]
+
+[IMG]https://raw.githubusercontent.com/Rubix-Development/Billify/main/docs/images/receipt-paid.png[/IMG]
+[I]Paid: stamped and archived[/I]
+
+[IMG]https://raw.githubusercontent.com/Rubix-Development/Billify/main/docs/images/receipt-overdue.png[/IMG]
+[I]Overdue: a one-time collection fee is added[/I]
+
+[IMG]https://raw.githubusercontent.com/Rubix-Development/Billify/main/docs/images/receipt-collected.png[/IMG]
+[I]Collected automatically from the balance[/I]
+
+[IMG]https://raw.githubusercontent.com/Rubix-Development/Billify/main/docs/images/receipt-cancelled.png[/IMG]
+[I]Cancelled invoices keep who cancelled them and why[/I]
+
+[IMG]https://raw.githubusercontent.com/Rubix-Development/Billify/main/docs/images/chat-invoice.png[/IMG]
+[I]Sending and receiving an invoice[/I][/CENTER]
+
+[SIZE=5][B]Features[/B][/SIZE]
+[LIST]
+[*][B]Receipt resource pack[/B] - paper receipts, stamps and custom icons, sent automatically on join (optional)
+[*][B]Clean invoice GUI[/B] - open and paid invoices in one menu, with a detail view per invoice
+[*][B]Debt collection agency[/B] - overdue invoices get a one-time fee, reminders every 30 minutes and are collected from the balance automatically
+[*][B]Configurable expiry[/B] - decide how long players have to pay
+[*][B]Invoice ranks[/B] - police, mechanics, landlords... each rank with its own limit and permissions
+[*][B]System invoices[/B] - create bills on behalf of a company, government or faction
+[*][B]Full invoice history[/B] - view any player's open and closed invoices
+[*][B]Cancel with a reason[/B] - mistakes happen, cancel any invoice
+[*][B]Every text in a language file[/B] - English and Dutch included, every message and every word on the receipt is editable (hex colours supported)
+[*][B]Open the menu your way[/B] - command, right-clicking an item or right-clicking a block
+[*][B]Vault auto-download[/B] - Billify installs the right Vault version for you when it is missing
+[/LIST]
+
+[SIZE=5][B]Commands[/B][/SIZE]
+[CODE]/invoice                                             open your invoices
+/invoice create <player> <amount> <reason>           send an invoice
+/invoice forcecreate <creator> <payer> <amount> <reason>   create a system invoice
+/invoice view <player>                               view a player's invoices
+/invoice cancel <player> <id> <reason>               cancel an invoice
+/invoice help                                        show all commands[/CODE]
+Aliases: /invoices, /bill, /bills, /fine, /fines, /payment
+
+[SIZE=5][B]Permissions[/B][/SIZE]
+[CODE]billify.open                  open your own invoices (default: everyone)
+billify.openmenu              open the menu with the configured item/block (default: everyone)
+billify.command.help          /invoice help (default: everyone)
+billify.command.create        /invoice create (default: op)
+billify.command.forcecreate   /invoice forcecreate (default: op)
+billify.command.view          /invoice view (default: op)
+billify.command.cancel        /invoice cancel (default: op)[/CODE]
+Invoice ranks (limits, who may create/cancel/check) are configured in config.yml, e.g. [I]billify.police[/I].
+
+[SIZE=5][B]Requirements[/B][/SIZE]
+[LIST]
+[*][B]Vault[/B] - downloaded automatically when missing, or [URL='https://www.spigotmc.org/resources/vault.34315/']download here[/URL]
+[*]An economy plugin such as Essentials, CMI or any other Vault-compatible economy
+[*]Resource pack (optional): Minecraft 1.20+ clients on a 1.14+ server
+[/LIST]
+
+[SIZE=5][B]Installation[/B][/SIZE]
+[LIST=1]
+[*]Install an economy plugin (Vault is installed for you if needed)
+[*]Drop Billify.jar in your plugins folder
+[*]Start your server and edit config.yml and language_EN.yml to taste
+[*]Already sending your own server resource pack? Merge [I]Billify-ResourcePack.zip[/I] (from GitHub) into it and set RESOURCE_PACK.SEND_ON_JOIN to false
+[/LIST]
+
+[SIZE=5][B]Compatibility[/B][/SIZE]
+Spigot and Paper, [B]1.8 through 1.21[/B].
+
+[SIZE=5][B]Statistics[/B][/SIZE]
+Billify reports anonymous usage data through bStats, public for everyone to see: [URL='https://bstats.org/plugin/bukkit/Billify/33589']bstats.org/plugin/bukkit/Billify/33589[/URL]
+
+[CENTER][SIZE=5][B]Questions? Bugs? Ideas?[/B][/SIZE]
+[URL='https://discord.gg/vwysWvaner'][SIZE=6][B]Join the Discord![/B][/SIZE][/URL]
+
+[SIZE=5][B]Need a custom plugin?[/B][/SIZE]
+[SIZE=4]Want a feature made just for your server, or a completely different project built?
+We are available for hire - plugins, resource packs and full server setups.
+Join the [URL='https://discord.gg/vwysWvaner']Discord[/URL] and open a ticket.[/SIZE]
+
+[SIZE=4]If Billify helps your server, a review means a lot.[/SIZE][/CENTER]

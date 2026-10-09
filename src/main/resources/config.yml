@@ -12,6 +12,21 @@ VAULT:
   # from the official GitHub releases and load it without a restart.
   AUTO_DOWNLOAD: true
 
+# Optional resource pack that turns the menus into paper receipts with stamps.
+# Players that don't have the pack loaded automatically get the classic menus.
+RESOURCE_PACK:
+  ENABLED: true
+  # Send the pack to players when they join. Turn this off if you already send a
+  # (merged) server pack yourself, e.g. via server.properties or another plugin.
+  SEND_ON_JOIN: true
+  URL: "https://raw.githubusercontent.com/Rubix-Development/Billify/main/resourcepack/Billify-ResourcePack.zip"
+  # SHA-1 of the pack. "AUTO" uses the hash of the pack bundled with this Billify version,
+  # leave empty to skip the check (set your own hash when you host a merged pack).
+  SHA1: ""
+  # Treat every player as having the pack, e.g. when it is sent by a proxy and the
+  # server never sees the pack status.
+  ASSUME_LOADED: false
+
 OPEN_INVOICE_MENU:
   COMMAND:
     ENABLED: true # Enable or disable the command for opening the invoice menu.
